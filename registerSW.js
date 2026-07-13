@@ -1,0 +1,1 @@
+if('serviceWorker' in navigator) {window.addEventListener('load', () => {navigator.serviceWorker.register('/dietary-memory-demo/sw.js', { scope: '/dietary-memory-demo/' })})}
