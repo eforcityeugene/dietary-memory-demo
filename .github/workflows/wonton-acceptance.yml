@@ -1,0 +1,38 @@
+name: Dietary Wonton Acceptance
+
+on:
+  push:
+    branches:
+      - 'release/dietary-*'
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  wonton:
+    name: dietary-wonton-browser
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: '24'
+          package-manager-cache: false
+      - name: Install browser test dependency
+        run: npm install --prefix "$RUNNER_TEMP/dietary-qa" --no-save --no-package-lock playwright@1.62.1
+      - name: Run the complete wonton journey
+        run: |
+          export DIETARY_PLAYWRIGHT_MODULE="$RUNNER_TEMP/dietary-qa/node_modules/playwright"
+          node .github/qa/accept-wonton.cjs . "$RUNNER_TEMP/dietary-qa/wonton-acceptance.json"
+      - name: Print browser acceptance evidence
+        if: always()
+        run: |
+          report="$RUNNER_TEMP/dietary-qa/wonton-acceptance.json"
+          if test -f "$report"; then cat "$report"; fi
+
