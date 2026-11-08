@@ -23,7 +23,7 @@ const site = new URL(publicUrl || 'https://dietary-qa.test/dietary-memory-demo/'
 assert(site.pathname.endsWith('/'));
 const dish = '雲吞麵';
 const note = 'QA｜合成煮食筆記：試加一份青菜';
-const authorTitle = 'Daddy Lau 雲吞湯麵';
+const authorTitle = '負向驗收測試：故意使用不存在嘅食譜';
 const expectedSources = [
   ['https://www.madewithlau.com/recipes/wonton-noodle-soup', /wonton noodle soup/i],
   ['https://www.madewithlau.com/recipes/wontons', /wontons/i],
